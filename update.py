@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fetch iCloud Private Relay egress IPs and collapse into minimal CIDR sets."""
 
+import argparse
 import ipaddress
 import os
 import sys
@@ -34,6 +35,16 @@ def parse_cidrs(csv_text):
     return ipv4, ipv6
 
 
+def cap_prefixes(networks, max_prefix):
+    capped = []
+    for net in networks:
+        if net.prefixlen > max_prefix:
+            capped.append(net.supernet(new_prefix=max_prefix))
+        else:
+            capped.append(net)
+    return list(set(capped))
+
+
 def collapse(networks):
     return list(ipaddress.collapse_addresses(sorted(networks)))
 
@@ -49,6 +60,13 @@ def count_addresses(networks):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Fetch and collapse iCloud Private Relay egress IPs.")
+    parser.add_argument("--ipv4-cap", type=int, default=None, metavar="N",
+                        help="Cap IPv4 prefix length to /N (e.g. 30). Smaller blocks are promoted to their containing /N supernet.")
+    parser.add_argument("--ipv6-cap", type=int, default=None, metavar="N",
+                        help="Cap IPv6 prefix length to /N (e.g. 60). Smaller blocks are promoted to their containing /N supernet.")
+    args = parser.parse_args()
+
     print(f"Fetching {SOURCE_URL} ...")
     csv_text = fetch_csv(SOURCE_URL)
     raw_lines = [l for l in csv_text.strip().splitlines() if l.strip()]
@@ -60,14 +78,21 @@ def main():
     print(f"  IPv6: {len(ipv6_raw)}")
     print(f"  total: {len(ipv4_raw) + len(ipv6_raw)}")
 
+    if args.ipv4_cap:
+        print(f"\nCapping IPv4 to /{args.ipv4_cap}")
+        ipv4_raw = cap_prefixes(ipv4_raw, args.ipv4_cap)
+    if args.ipv6_cap:
+        print(f"Capping IPv6 to /{args.ipv6_cap}")
+        ipv6_raw = cap_prefixes(ipv6_raw, args.ipv6_cap)
+
     ipv4 = collapse(ipv4_raw)
     ipv6 = collapse(ipv6_raw)
     all_nets = ipv4 + ipv6
 
     print(f"\nCollapsed CIDRs:")
-    print(f"  IPv4: {len(ipv4_raw)} -> {len(ipv4)} ({100 - len(ipv4) * 100 / max(len(ipv4_raw), 1):.1f}% reduction)")
-    print(f"  IPv6: {len(ipv6_raw)} -> {len(ipv6)} ({100 - len(ipv6) * 100 / max(len(ipv6_raw), 1):.1f}% reduction)")
-    print(f"  total: {len(ipv4_raw) + len(ipv6_raw)} -> {len(all_nets)} ({100 - len(all_nets) * 100 / max(len(ipv4_raw) + len(ipv6_raw), 1):.1f}% reduction)")
+    print(f"  IPv4: {len(ipv4)} entries")
+    print(f"  IPv6: {len(ipv6)} entries")
+    print(f"  total: {len(all_nets)} entries")
 
     print(f"\nAddress coverage:")
     print(f"  IPv4: {count_addresses(ipv4):,} addresses")
