@@ -1,8 +1,6 @@
 # iCloud Private Relay Egress IP Sets
 
-Collapsed CIDR sets from Apple's [iCloud Private Relay egress IP ranges](https://mask-api.icloud.com/egress-ip-ranges.csv).
-
-Updated daily via GitHub Actions.
+Apple publishes ~287K individual CIDRs for iCloud Private Relay egress IPs. This repo collapses them into minimal IP sets by merging adjacent and overlapping ranges, updated daily via GitHub Actions.
 
 ## Files
 
