@@ -14,7 +14,7 @@ Source: https://mask-api.icloud.com/egress-ip-ranges.csv
 
 ## Reducing CIDR count
 
-By default the script collapses adjacent/overlapping CIDRs. For further reduction for any reason, you can cap prefix lengths. Blocks smaller than the cap are promoted to their containing supernet, trading a small number of false positives for fewer entries.
+By default the script collapses adjacent/overlapping CIDRs. If the collapsed list is still too large, you can cap prefix lengths to shrink it further. Blocks smaller than the cap are promoted to their containing supernet, trading a small number of false positives for fewer entries.
 
 ```bash
 # Cap IPv4 to /30, IPv6 to /60
