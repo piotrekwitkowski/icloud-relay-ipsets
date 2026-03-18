@@ -59,9 +59,9 @@ def update_readme(output_dir, ipv4_raw_count, ipv6_raw_count, ipv4_count, ipv6_c
         "\n"
         "| File | Raw CIDRs | Collapsed CIDRs | Reduction |\n"
         "|---|---|---|---|\n"
+        f"| [all.txt](all.txt) | {ipv4_raw_count + ipv6_raw_count:,} | {ipv4_count + ipv6_count:,} | {100 - (ipv4_count + ipv6_count) * 100 / max(ipv4_raw_count + ipv6_raw_count, 1):.1f}% |\n"
         f"| [ipv4.txt](ipv4.txt) | {ipv4_raw_count:,} | {ipv4_count:,} | {100 - ipv4_count * 100 / max(ipv4_raw_count, 1):.1f}% |\n"
         f"| [ipv6.txt](ipv6.txt) | {ipv6_raw_count:,} | {ipv6_count:,} | {100 - ipv6_count * 100 / max(ipv6_raw_count, 1):.1f}% |\n"
-        f"| [all.txt](all.txt) | {ipv4_raw_count + ipv6_raw_count:,} | {ipv4_count + ipv6_count:,} | {100 - (ipv4_count + ipv6_count) * 100 / max(ipv4_raw_count + ipv6_raw_count, 1):.1f}% |\n"
     )
 
     import re
