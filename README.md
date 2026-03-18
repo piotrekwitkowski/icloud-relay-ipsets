@@ -6,17 +6,11 @@ Updated daily via GitHub Actions.
 
 ## Files
 
-- `ipv4.txt` — collapsed IPv4 CIDRs
-- `ipv6.txt` — collapsed IPv6 CIDRs
-- `all.txt` — both combined
-
-## Stats
-
-| | Raw | Collapsed | Reduction |
+| File | Raw CIDRs | Collapsed CIDRs | Reduction |
 |---|---|---|---|
-| IPv4 | 41,698 | 3,265 | 92.2% |
-| IPv6 | 245,176 | 10,091 | 95.9% |
-| Total | 286,874 | 13,356 | 95.3% |
+| [ipv4.txt](ipv4.txt) | 41,698 | 3,265 | 92.2% |
+| [ipv6.txt](ipv6.txt) | 245,176 | 10,091 | 95.9% |
+| [all.txt](all.txt) | 286,874 | 13,356 | 95.3% |
 
 ## Reducing CIDR count
 

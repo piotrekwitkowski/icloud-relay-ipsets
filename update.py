@@ -55,17 +55,17 @@ def update_readme(output_dir, ipv4_raw_count, ipv6_raw_count, ipv4_count, ipv6_c
         content = f.read()
 
     stats = (
-        "## Stats\n"
+        "## Files\n"
         "\n"
-        "| | Raw | Collapsed | Reduction |\n"
+        "| File | Raw CIDRs | Collapsed CIDRs | Reduction |\n"
         "|---|---|---|---|\n"
-        f"| IPv4 | {ipv4_raw_count:,} | {ipv4_count:,} | {100 - ipv4_count * 100 / max(ipv4_raw_count, 1):.1f}% |\n"
-        f"| IPv6 | {ipv6_raw_count:,} | {ipv6_count:,} | {100 - ipv6_count * 100 / max(ipv6_raw_count, 1):.1f}% |\n"
-        f"| Total | {ipv4_raw_count + ipv6_raw_count:,} | {ipv4_count + ipv6_count:,} | {100 - (ipv4_count + ipv6_count) * 100 / max(ipv4_raw_count + ipv6_raw_count, 1):.1f}% |\n"
+        f"| [ipv4.txt](ipv4.txt) | {ipv4_raw_count:,} | {ipv4_count:,} | {100 - ipv4_count * 100 / max(ipv4_raw_count, 1):.1f}% |\n"
+        f"| [ipv6.txt](ipv6.txt) | {ipv6_raw_count:,} | {ipv6_count:,} | {100 - ipv6_count * 100 / max(ipv6_raw_count, 1):.1f}% |\n"
+        f"| [all.txt](all.txt) | {ipv4_raw_count + ipv6_raw_count:,} | {ipv4_count + ipv6_count:,} | {100 - (ipv4_count + ipv6_count) * 100 / max(ipv4_raw_count + ipv6_raw_count, 1):.1f}% |\n"
     )
 
     import re
-    stats_pattern = r"## Stats\n\n\|[^#]*?\n(?=\n##|\Z)"
+    stats_pattern = r"## Files\n\n\| File[^#]*?\n(?=\n##|\Z)"
     if re.search(stats_pattern, content):
         content = re.sub(stats_pattern, stats, content)
     else:
