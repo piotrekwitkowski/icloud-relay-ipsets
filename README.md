@@ -10,6 +10,14 @@ Updated daily via GitHub Actions.
 - `ipv6.txt` — collapsed IPv6 CIDRs
 - `all.txt` — both combined
 
+## Stats
+
+| | Raw | Collapsed | Reduction |
+|---|---|---|---|
+| IPv4 | 41,698 | 3,265 | 92.2% |
+| IPv6 | 245,176 | 10,091 | 95.9% |
+| Total | 286,874 | 13,356 | 95.3% |
+
 ## Reducing CIDR count
 
 By default the script collapses adjacent/overlapping CIDRs. For further reduction (e.g. to fit within AWS WAF IP set limits of 10,000), you can cap prefix lengths. Blocks smaller than the cap are promoted to their containing supernet, trading a small number of false positives for fewer entries.
