@@ -8,9 +8,9 @@ Source: https://mask-api.icloud.com/egress-ip-ranges.csv
 
 | File | Raw CIDRs | Collapsed CIDRs | Reduction |
 |---|---|---|---|
-| [all.txt](all.txt) | 285,175 | 14,020 | 95.1% |
-| [ipv4.txt](ipv4.txt) | 41,814 | 3,438 | 91.8% |
-| [ipv6.txt](ipv6.txt) | 243,361 | 10,582 | 95.7% |
+| [all.txt](all.txt) | 285,194 | 13,994 | 95.1% |
+| [ipv4.txt](ipv4.txt) | 41,831 | 3,414 | 91.8% |
+| [ipv6.txt](ipv6.txt) | 243,363 | 10,580 | 95.7% |
 
 ## Reducing CIDR count
 
